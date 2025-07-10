@@ -31,3 +31,26 @@ export function formUrlQuery({
     },
   );
 }
+interface RemoveUrlQueryParams {
+  params: string;
+  keysToRemove: string[];
+}
+
+export function removeKeysFromUrlQuery({
+  params,
+  keysToRemove,
+}: RemoveUrlQueryParams) {
+  const queryString = qs.parse(params);
+
+  keysToRemove.forEach((key) => {
+    delete queryString[key];
+  });
+
+  return qs.stringify(
+    {
+      url: window.location.pathname,
+      query: queryString,
+    },
+    { skipNulls: true }
+  );
+}

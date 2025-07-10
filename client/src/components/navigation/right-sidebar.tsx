@@ -4,7 +4,7 @@ import React from "react";
 
 import { ROUTES } from "@/constants/routes";
 
-import { TagCard } from "../carts/tag-card";
+import { TagCard } from "../cards/tag-card";
 
 const topQuestions = [
   {

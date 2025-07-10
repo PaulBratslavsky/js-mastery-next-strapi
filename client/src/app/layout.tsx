@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { auth } from "@/auth";
 import { Toaster } from "@/components/ui/sonner";
@@ -41,17 +42,19 @@ export default async function RootLayout({
         />
       </head>
       <SessionProvider session={session}>
-        <body className={`${inter.variable} antialiased`}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-          <Toaster />
-        </body>
+        <NuqsAdapter>
+          <body className={`${inter.variable} antialiased`}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+            <Toaster />
+          </body>
+        </NuqsAdapter>
       </SessionProvider>
     </html>
   );
