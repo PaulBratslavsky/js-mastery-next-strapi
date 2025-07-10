@@ -97,7 +97,7 @@ export function RightSidebar() {
         <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
         <div className="flex flex-wrap gap-2 mt-7">
           {popularTags.map(({ documentId, name, questions, showCount, compact }) => (
-            <TagCard key={documentId} {...{ documentId, name, questions, showCount, compact }} />
+            <TagCard key={documentId} data={{ documentId, name, questions, showCount, compact }} />
           ))}
         </div>
       </div>

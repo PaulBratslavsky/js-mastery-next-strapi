@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
 
+import { QuestionCard } from "@/components/cards/qustion-card";
 import { HomeFilter } from "@/components/filters/home-filter";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
@@ -17,32 +18,6 @@ interface PageProps {
   searchParams: SearchParams;
 }
 
-interface Question {
-  _id: string;
-  title: string;
-  description: string;
-  tags: string[];
-  author: {
-    _id: string;
-    name: string;
-    createdAt: Date;
-  };
-  upvotes: number;
-  views: number;
-  answers: number;
-  createdAt: Date;
-}
-
-function QuestionCard({ question }: { question: Question }) {
-  return (
-    <div>
-      <h2>{question.title}</h2>
-      <p>{question.description}</p>
-      <p>{question.tags.join(", ")}</p>
-    </div>
-  );
-}
-
 export default async function HomeRoute({ params, searchParams }: PageProps) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
@@ -53,79 +28,133 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
 
   const mockQuestions = [
     {
-      _id: "1",
+      documentId: "1",
       title: "What is React.js?",
       description:
         "React.js is a JavaScript library for building user interfaces.",
-      tags: ["JavaScript", "React"],
-      author: {
-        _id: "1",
-        name: "John Doe",
-        createdAt: new Date(),
-      },
+      tags: [{
+        documentId: "1",
+        name: "JavaScript",
+        questions: 10,
+        showCount: true,
+        compact: true,
+      }, {
+        documentId: "1",
+        name: "React",
+        questions: 10,
+        showCount: true,
+        compact: true,
+      }],
       upvotes: 10,
       views: 100,
       answers: 10,
       createdAt: new Date(),
+      author: {
+        documentId: "1",
+        name: "John Doe",
+        image: "https://robohash.org/Paul",
+      },
     },
     {
-      _id: "2",
+      documentId: "2",
       title: "What is Next.js?",
       description:
         "Next.js is a React framework for building server-side rendered applications.",
-      tags: ["JavaScript", "React"],
-      author: {
-        _id: "1",
-        name: "John Doe",
-        createdAt: new Date(),
-      },
+      tags: [{
+        documentId: "1",
+        name: "JavaScript",
+        questions: 10,
+        showCount: true,
+        compact: true,
+      }, {
+        documentId: "1",
+        name: "React",
+        questions: 10,
+        showCount: true,
+        compact: true,
+      }],
       upvotes: 10,
       views: 100,
       answers: 10,
       createdAt: new Date(),
+      author: {
+        documentId: "1",
+        name: "John Doe",
+        image: "https://robohash.org/Paul",
+      },
     },
     {
-      _id: "3",
+      documentId: "3",
       title: "What is TypeScript?",
       description:
         "TypeScript is a superset of JavaScript that adds static typing.",
-      tags: ["JavaScript", "TypeScript"],
-      author: {
-        _id: "1",
-        name: "John Doe",
-        createdAt: new Date(),
-      },
+      tags: [{
+        documentId: "1",
+        name: "JavaScript",
+        questions: 10,
+        showCount: true,
+        compact: true,
+      }, {
+        documentId: "1",
+        name: "TypeScript",
+        questions: 10,
+        showCount: true,
+        compact: true,
+      }],
       upvotes: 10,
       views: 100,
       answers: 10,
       createdAt: new Date(),
+      author: {
+        documentId: "1",
+        name: "John Doe",
+        image: "https://robohash.org/Paul",
+      },
     },
     {
-      _id: "4",
+      documentId: "4",
       title: "What is Node.js?",
       description:
         "Node.js is a runtime environment for executing JavaScript code outside of a browser.",
-      tags: ["JavaScript", "Node.js"],
-      author: {
-        _id: "1",
-        name: "John Doe",
-        createdAt: new Date(),
-      },
+      tags: [{
+        documentId: "1",
+        name: "JavaScript",
+        questions: 10,
+        showCount: true,
+        compact: true,
+      }, {
+        documentId: "1",
+        name: "Node.js",
+        questions: 10,
+        showCount: true,
+        compact: true,
+      }],
       upvotes: 10,
       views: 100,
       answers: 10,
       createdAt: new Date(),
+      author: {
+        documentId: "1",
+        name: "John Doe",
+        image: "https://robohash.org/Paul",
+      },
     },
     {
-      _id: "5",
+      documentId: "5",
       title: "What is MongoDB?",
       description:
         "MongoDB is a NoSQL database that uses JSON-like documents with schemas.",
-      tags: ["Node.js"],
+      tags: [{
+        documentId: "1",
+        name: "Node.js",
+        questions: 10,
+        showCount: true,
+        compact: true,
+      }],
       author: {
-        _id: "1",
+        documentId: "1",
         name: "John Doe",
-        createdAt: new Date(),
+        image: "https://robohash.org/Paul",
       },
       upvotes: 10,
       views: 100,
@@ -133,14 +162,20 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
       createdAt: new Date(),
     },
     {
-      _id: "6",
+      documentId: "6",
       title: "What is Express.js?",
       description: "Express.js is a web application framework for Node.js.",
-      tags: ["Node.js"],
+      tags: [{
+        documentId: "1",
+        name: "Node.js",
+        questions: 10,
+        showCount: true,
+        compact: true,
+      }],
       author: {
-        _id: "1",
+        documentId: "1",
         name: "John Doe",
-        createdAt: new Date(),
+        image: "https://robohash.org/Paul",
       },
       upvotes: 10,
       views: 100,
@@ -151,7 +186,7 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
 
   const filteredQuestions = mockQuestions.filter((question) => {
     const matchesQuery = question.title.toLowerCase().includes(query.toString()) || question.description.toLowerCase().includes(query.toString());
-    const matchesTags = question.tags.some((tag) => tag.toLowerCase().includes(filters.toString()));
+    const matchesTags = question.tags.some((tag) => tag.name.toLowerCase().includes(filters.toString()));
     return matchesQuery && matchesTags;
   });
 
@@ -173,7 +208,7 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
       </section>
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <QuestionCard key={question._id} question={question} />
+          <QuestionCard key={question.documentId} question={question} />
         ))}
       </div>
     </React.Fragment>

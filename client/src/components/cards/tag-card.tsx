@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 import { getDevIcon } from "@/lib/utils";
+import { Tag } from "@/types";
 
 const tagColors = [
   "bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100",
@@ -16,24 +17,17 @@ const tagColors = [
 ];
 
 interface TagCardInterface {
-  documentId: string;
-  name: string;
-  questions: number;
-  showCount?: boolean;
-  compact?: boolean;
+  data: Tag;
 }
 
 export function TagCard({
-  documentId,
-  name,
-  questions,
-  showCount,
+  data: { documentId, name, questions, showCount, compact},
 }: TagCardInterface) {
   const randomColor = tagColors[Math.floor(Math.random() * tagColors.length)];
   const iconClassName = getDevIcon(name);
   return (
     <Link href={ROUTES.TAGS(documentId)} className="inline-flex">
-      <Badge className={cn("flex items-center gap-2 px-3 py-1", randomColor)}>
+      <Badge className={cn("flex items-center gap-2 px-3 py-1", randomColor, compact && "px-2 py-0.5"     )}>
         <i className={cn(iconClassName, "text-sm")}></i>
         <span>{name}</span>
         {showCount && <p className="small-medium">{questions}</p>}
