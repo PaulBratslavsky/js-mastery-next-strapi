@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
 
+import { HomeFilter } from "@/components/filters/home-filter";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
 import { Params, SearchParams } from "@/types";
@@ -45,17 +46,17 @@ function QuestionCard({ question }: { question: Question }) {
 export default async function HomeRoute({ params, searchParams }: PageProps) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
+  const { query = "", filters = "" } = resolvedSearchParams;
 
   console.log(resolvedParams, "resolvedParams");
   console.log(resolvedSearchParams, "resolvedSearchParams");
-
-
 
   const mockQuestions = [
     {
       _id: "1",
       title: "What is React.js?",
-      description: "React.js is a JavaScript library for building user interfaces.",
+      description:
+        "React.js is a JavaScript library for building user interfaces.",
       tags: ["JavaScript", "React"],
       author: {
         _id: "1",
@@ -70,7 +71,8 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
     {
       _id: "2",
       title: "What is Next.js?",
-      description: "Next.js is a React framework for building server-side rendered applications.",
+      description:
+        "Next.js is a React framework for building server-side rendered applications.",
       tags: ["JavaScript", "React"],
       author: {
         _id: "1",
@@ -85,8 +87,9 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
     {
       _id: "3",
       title: "What is TypeScript?",
-      description: "TypeScript is a superset of JavaScript that adds static typing.",
-      tags: ["JavaScript", "TypeScript", "React"],
+      description:
+        "TypeScript is a superset of JavaScript that adds static typing.",
+      tags: ["JavaScript", "TypeScript"],
       author: {
         _id: "1",
         name: "John Doe",
@@ -100,8 +103,9 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
     {
       _id: "4",
       title: "What is Node.js?",
-      description: "Node.js is a runtime environment for executing JavaScript code outside of a browser.",
-      tags: ["JavaScript", "Node.js", "React"],
+      description:
+        "Node.js is a runtime environment for executing JavaScript code outside of a browser.",
+      tags: ["JavaScript", "Node.js"],
       author: {
         _id: "1",
         name: "John Doe",
@@ -115,13 +119,14 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
     {
       _id: "5",
       title: "What is MongoDB?",
-      description: "MongoDB is a NoSQL database that uses JSON-like documents with schemas.",
-      tags: ["JavaScript", "Node.js", "React"],
+      description:
+        "MongoDB is a NoSQL database that uses JSON-like documents with schemas.",
+      tags: ["Node.js"],
       author: {
         _id: "1",
         name: "John Doe",
         createdAt: new Date(),
-      },  
+      },
       upvotes: 10,
       views: 100,
       answers: 10,
@@ -131,7 +136,7 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
       _id: "6",
       title: "What is Express.js?",
       description: "Express.js is a web application framework for Node.js.",
-      tags: ["JavaScript", "Node.js", "React"], 
+      tags: ["Node.js"],
       author: {
         _id: "1",
         name: "John Doe",
@@ -145,13 +150,11 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
   ];
 
   const filteredQuestions = mockQuestions.filter((question) => {
-    if (resolvedSearchParams.query) {
-      const searchQuery = resolvedSearchParams.query.toString().toLowerCase();
-      console.log(searchQuery, "searchQuery");
-      return question.title.toLowerCase().includes(searchQuery) || question.description.toLowerCase().includes(searchQuery) || question.tags.some((tag) => tag.toLowerCase().includes(searchQuery));
-    }
-    return question;
+    const matchesQuery = question.title.toLowerCase().includes(query.toString()) || question.description.toLowerCase().includes(query.toString());
+    const matchesTags = question.tags.some((tag) => tag.toLowerCase().includes(filters.toString()));
+    return matchesQuery && matchesTags;
   });
+
 
   return (
     <React.Fragment>
@@ -165,8 +168,9 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
           <Link href={ROUTES.ASK_QUESTION}>Ask a Question</Link>
         </Button>
       </section>
-      <section className="mt-11">LocalSearch</section>
-      HomeFilter
+      <section className="mt-11">
+        <HomeFilter />
+      </section>
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
           <QuestionCard key={question._id} question={question} />

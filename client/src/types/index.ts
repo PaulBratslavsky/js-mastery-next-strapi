@@ -7,6 +7,7 @@ export interface RouteParams extends BaseParams {
   id?: string;
   tag?: string;
   questionId?: string;
+  url?: string;
 }
 
 export type Params = Promise<RouteParams>;

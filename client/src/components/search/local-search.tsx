@@ -50,7 +50,7 @@ export function LocalSearch({
           className="cursor-pointer"
         />
       ) : (
-        <Search className="h-5 w-5 text-dark-100" />
+        <Search className="h-5 w-5 text-dark400_light800" />
       )}
       <Input
         type="text"

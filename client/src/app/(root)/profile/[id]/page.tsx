@@ -1,7 +1,13 @@
+import { Params, SearchParams } from "@/types";
 
-export default async function SingleProfileRoute({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Params;
+  searchParams: SearchParams;
+}
+
+export default async function SingleProfileRoute({ params }: PageProps) {
   const resolvedParams = await params;
-  const pageTitle = resolvedParams.id;
+  const pageTitle = resolvedParams?.id;
   return ( 
     <div className='min-h-screen w-full flex justify-center items-center'>
       <h1 className='h1-bold text-white invert-colors'>{pageTitle}</h1>
