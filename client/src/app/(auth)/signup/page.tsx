@@ -7,7 +7,7 @@ export default function Signup() {
     <AuthForm
       formType="SIGN_UP"
       schema={SignUpSchema}
-      defaultValues={{ email: "", password: "", username: "",  }}
+      defaultValues={{ username: "", email: "", password: "" }}
       onSubmit={(data) => Promise.resolve({ success: true, data })}
     />
   );
