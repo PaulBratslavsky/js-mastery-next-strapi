@@ -1,8 +1,11 @@
-
+import { QuestionForm } from "@/components/forms/question-form";
 export default async function AskQuestionRoute() {
   return ( 
-    <div className='min-h-screen w-full flex justify-center items-center'>
-      <h1 className='h1-bold text-white invert-colors'>Ask a question</h1>
+    <div className='min-h-screen'>
+      <h1 className='h1-bold text-dark100_light900'>Ask a question</h1>
+      <div className="mt-9">
+        <QuestionForm />
+      </div>
     </div>
   )
 }
