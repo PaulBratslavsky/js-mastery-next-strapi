@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { Editor } from "@/components/editor";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,7 +16,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AskQuestionSchema } from "@/lib/validations";
-
 export function QuestionForm() {
   const form = useForm({
     resolver: zodResolver(AskQuestionSchema),
@@ -67,7 +67,9 @@ export function QuestionForm() {
               <FormLabel className="paragraph-medium text-dark400_light700">
                 Question Content <span className="text-primary-500">*</span>
               </FormLabel>
-              <FormControl>Editor Component</FormControl>
+              <FormControl>
+                <Editor markdown={field.value} onChange={field.onChange} />
+              </FormControl>
               <FormDescription className="body-regular text-light-500">
                 Give a detailed description of your problem/question. Add any
                 relevant code, examples, or links.
