@@ -6,6 +6,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function getStrapiURL() {
+  return process.env.NEXT_PUBLIC_STRAPI_API_URL ?? "http://localhost:1337";
+}
+
 export function getDevIcon(name: string) {
   const normalizedName = name.toLowerCase().replace(/[ .]/g, "-");
   return `devicon-${normalizedName}-plain`;

@@ -1,16 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { AuthButton, AuthUserNavButton } from "@/components/auth";
 import { ThemeToggle } from "@/components/custom/theme-toggle";
-import { UserButton } from "@/components/custom/user-button";
 import { LocalSearch } from "@/components/search/local-search";
 import { cn } from "@/lib/utils";
+import { StrapiUserData } from "@/types";
 
 import { MobileNavigation } from "./mobile-navigation";
 import { styles } from "./styles";
 
+interface TopNavigationProps {
+  user: StrapiUserData | null;
+}
 
-export function TopNavigation() {
+export function TopNavigation({ user }: TopNavigationProps) {
   return (
     <nav className={styles.navbar}>
       <Link href="/" className={styles.link}>
@@ -25,15 +29,16 @@ export function TopNavigation() {
         </p>
       </Link>
 
-      <LocalSearch
-        route="/search"
-        placeholder="Search anything..."
-      />
+      <LocalSearch route="/search" placeholder="Search anything..." />
 
       <div className="flex gap-2">
-        <UserButton className="hidden sm:block" />
+        {user ? (
+          <AuthUserNavButton user={user} className="hidden sm:block" />
+        ) : (
+          <AuthButton />
+        )}
         <ThemeToggle />
-        <MobileNavigation />
+        <MobileNavigation user={user} />
       </div>
     </nav>
   );

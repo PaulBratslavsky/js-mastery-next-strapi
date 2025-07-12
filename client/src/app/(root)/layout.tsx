@@ -3,16 +3,28 @@ import {
   RightSidebar,
   TopNavigation,
 } from "@/components/navigation";
+import { getUserMeLoader } from "@/lib/services/user";
 
 interface Props {
   children: React.ReactNode;
 }
 
-export default function DashboardLayout(props: Props) {
+async function loader() {
+  try {
+    const user = await getUserMeLoader();
+    return user?.data;
+  } catch (error) {
+    console.error("Failed to load user:", error);
+    throw error;
+  }
+}
+
+export default async function DashboardLayout(props: Props) {
   const { children } = props;
+  const user = await loader();
   return (
     <main className="h-screen background-light850_dark100 relative overflow-hidden">
-      <TopNavigation />
+      <TopNavigation user={user} />
       <div className="flex h-[calc(100vh-4rem)]">
         <LeftSidebar />
         <section className="flex min-h-screen flex-1 flex-col px-6 pb-6 pt-36 max-md:pb-14 sm:px-14">

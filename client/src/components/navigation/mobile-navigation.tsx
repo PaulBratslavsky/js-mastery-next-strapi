@@ -14,13 +14,17 @@ import {
   SheetFooter,
 } from "@/components/ui/sheet";
 import { navLinks } from "@/constants/nav-links";
-import { ROUTES } from "@/constants/routes";
+import { StrapiUserData } from "@/types";
 
+import { AuthButton, AuthUserNavButton } from "../auth";
 import { NavLinks } from "./nav-link";
 import { styles } from "./styles";
 
+interface MobileNavigationProps {
+  user: StrapiUserData | null;
+}
 
-export function MobileNavigation() {
+export function MobileNavigation({ user }: MobileNavigationProps) {
   const pathname = usePathname();
   console.log(pathname);
 
@@ -52,9 +56,11 @@ export function MobileNavigation() {
           </div>
         </div>
         <SheetFooter className="flex flex-col gap-2">
-          <Link href={ROUTES.SIGN_UP}>
-            <Button className="w-full primary-gradient text-white">Sign In</Button>
-          </Link>
+        {user ? (
+          <AuthUserNavButton user={user} className="hidden sm:block" />
+        ) : (
+          <AuthButton />
+        )}
         </SheetFooter>
       </SheetContent>
     </Sheet>
