@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const MDXEditorClient = dynamic(() => import("./mdx-editor-client"), {
   ssr: false,
   loading: () => (
-    <div className="min-h-[400px] rounded-md border bg-white p-4">
+    <div className="min-h-[350px] rounded-md border background-light500_dark200 text-light-700_dark300 p-4">
       <div className="space-y-3">
         <Skeleton className="h-8 w-full" />
         <Skeleton className="h-4 w-3/4" />
@@ -52,7 +52,7 @@ export function EditorWrapper({
     return (
       <Alert
         variant="destructive"
-        className="min-h-[400px] flex items-center justify-center"
+        className="min-h-[350px] flex items-center justify-center"
       >
         <AlertCircle className="h-4 w-4" />
         <AlertDescription>
@@ -72,7 +72,7 @@ export function EditorWrapper({
 }
 
 export const ForwardRefEditor = forwardRef<MDXEditorMethods, MDXEditorProps>(
-  (props, ref) => <MDXEditorClient {...props} editorRef={ref} />
+  (props, ref) => <MDXEditorClient {...props} editorRef={ref}  />
 );
 
 ForwardRefEditor.displayName = "ForwardRefEditor";
