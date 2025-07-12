@@ -16,8 +16,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AskQuestionSchema } from "@/lib/validations";
+
+import { MultiSelect } from "../custom/multi-select";
+
 export function QuestionForm() {
-  const form = useForm({
+  const form = useForm<z.infer<typeof AskQuestionSchema>>({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
       title: "",
@@ -29,6 +32,30 @@ export function QuestionForm() {
   const handleCreateQuestion = (values: z.infer<typeof AskQuestionSchema>) => {
     console.log(values);
   };
+
+
+  const frameworksList = [
+    {
+      value: "next.js",
+      label: "Next.js",
+    },
+    {
+      value: "sveltekit",
+      label: "SvelteKit",
+    },
+    {
+      value: "nuxt.js",
+      label: "Nuxt.js",
+    },
+    {
+      value: "remix",
+      label: "Remix",
+    },
+    {
+      value: "astro",
+      label: "Astro",
+    },
+  ];
 
   return (
     <Form {...form}>
@@ -79,6 +106,7 @@ export function QuestionForm() {
           )}
         />
 
+
         <FormField
           control={form.control}
           name="tags"
@@ -89,12 +117,15 @@ export function QuestionForm() {
               </FormLabel>
               <FormControl>
                 <div className="flex-between gap-3">
-                  <Input
-                    {...field}
-                    placeholder="Add tags..."
-                    className="paragraph-regular background-light700_dark300 light-border-2 text-dark300_light700 no-focus min-h-[56px] border"
+                  <MultiSelect
+                    options={frameworksList}
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    placeholder="Select options"
+                    variant="inverted"
+                    animation={2}
+                    maxCount={3}
                   />
-                  Tags
                 </div>
               </FormControl>
               <FormDescription className="body-regular text-light-500">

@@ -16,7 +16,7 @@ export type SearchParams = Promise<BaseParams>;
 export type Tag = {
   documentId: string;
   name: string;
-  questions: number;
+  questions?: number;
   showCount?: boolean;
   compact?: boolean;
 };
