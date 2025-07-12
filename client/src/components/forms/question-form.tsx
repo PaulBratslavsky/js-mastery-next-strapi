@@ -31,6 +31,9 @@ export function QuestionForm() {
 
   const handleCreateQuestion = (values: z.infer<typeof AskQuestionSchema>) => {
     console.log(values);
+    const { title, content, tags } = values;
+    console.log(title, content, tags);
+    alert(JSON.stringify(values));
   };
 
 
