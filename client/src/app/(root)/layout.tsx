@@ -5,6 +5,9 @@ import {
 } from "@/components/navigation";
 import { getUserMeLoader } from "@/lib/services/user";
 
+// Force dynamic rendering for the entire app
+export const dynamic = "force-dynamic"
+
 interface Props {
   children: React.ReactNode;
 }
