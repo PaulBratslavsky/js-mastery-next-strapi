@@ -13,13 +13,13 @@ export async function getUserMeLoader(): Promise<GetUserMeLoaderResponse> {
   const baseUrl = getStrapiURL();
   const url = new URL("/api/users/me", baseUrl);
 
-  url.search = qs.stringify({
-    populate: {
-      userProfile: {
-        fields: ["documentId"]
-      }
-    }
-  })
+  // url.search = qs.stringify({
+  //   populate: {
+  //     userProfile: {
+  //       fields: ["documentId"]
+  //     }
+  //   }
+  // })
 
   const authToken = await getAuthToken();
   if (!authToken) return { ok: false, data: null, error: null };

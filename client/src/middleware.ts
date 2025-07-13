@@ -9,6 +9,7 @@ const protectedRoutes: string[] = [
   "/dashboard/*",
   "/suggestions",
   "/suggestions/*",
+  "/ask-question",
 ];
 
 // Helper function to check if a path is protected
@@ -28,6 +29,10 @@ function isProtectedRoute(path: string): boolean {
 
 export async function middleware(request: NextRequest) {
   const user = await getUserMeLoader();
+  console.log("************ middleware ************");
+  console.log(user, "user");
+  console.log("************************************");
+
   const currentPath = request.nextUrl.pathname;
 
   if (isProtectedRoute(currentPath) && user.ok === false) {
@@ -67,5 +72,6 @@ export const config = {
     "/((?!api|_next/static|_next/image|favicon.ico).*)",
     "/dashboard",
     "/dashboard/:path*",
+    "/ask-question",
   ],
 };

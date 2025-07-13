@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
-import { auth } from "@/auth";
 import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
@@ -28,10 +26,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-
-  console.log(session, "session");
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -41,21 +35,19 @@ export default async function RootLayout({
           href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
         />
       </head>
-      <SessionProvider session={session}>
-        <NuqsAdapter>
-          <body className={`${inter.variable} antialiased`}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-            <Toaster />
-          </body>
-        </NuqsAdapter>
-      </SessionProvider>
+      <NuqsAdapter>
+        <body className={`${inter.variable} antialiased`}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+          <Toaster />
+        </body>
+      </NuqsAdapter>
     </html>
   );
 }
