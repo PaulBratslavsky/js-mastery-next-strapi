@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "votes",
+  "info": {
+    "singularName": "vote",
+    "pluralName": "votes",
+    "displayName": "Vote"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "author": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-profile.user-profile"
+    },
+    "referenceId": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::content.content"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "upvote",
+        "downvote"
+      ]
+    }
+  }
+}

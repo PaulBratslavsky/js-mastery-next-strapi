@@ -1,0 +1,86 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contents",
+  "info": {
+    "singularName": "content",
+    "pluralName": "contents",
+    "displayName": "Content"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-profile.user-profile"
+    },
+    "type": {
+      "type": "enumeration",
+      "default": "question",
+      "enum": [
+        "question",
+        "answer"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "question"
+          ]
+        }
+      }
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "question"
+          ]
+        }
+      }
+    },
+    "answers": {
+      "type": "integer",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "question"
+          ]
+        }
+      },
+      "default": 0
+    },
+    "upvotes": {
+      "type": "integer",
+      "default": 0
+    },
+    "downvotes": {
+      "type": "integer",
+      "default": 0
+    },
+    "referenceId": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::content.content"
+    }
+  }
+}

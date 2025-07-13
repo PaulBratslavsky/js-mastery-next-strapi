@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "interactions",
+  "info": {
+    "singularName": "interaction",
+    "pluralName": "interactions",
+    "displayName": "Interaction"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-profile.user-profile"
+    },
+    "referenceId": {
+      "type": "string"
+    },
+    "actionType": {
+      "type": "enumeration",
+      "enum": [
+        "view",
+        "answer",
+        "upvote",
+        "downvote"
+      ]
+    },
+    "actionDescription": {
+      "type": "string"
+    }
+  }
+}
