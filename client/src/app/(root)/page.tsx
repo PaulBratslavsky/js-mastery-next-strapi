@@ -2,16 +2,28 @@ import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
 
-import { QuestionCard } from "@/components/cards/qustion-card";
+import { QuestionCard } from "@/components/cards/question-card";
 import { HomeFilter } from "@/components/filters/home-filter";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
+import { handleError } from "@/lib/handlers/error";
 import { Params, SearchParams } from "@/types";
+import { handleStrapiError } from "@/lib/handlers/handle-strapi-error";
 
 export const metadata: Metadata = {
   title: "Home",
   description: "Home",
 };
+
+// const test = async () => {
+//   try {
+//     const response = await fetch("http://localhost:1337/api/content");
+//     const data = await response.json();
+//     if (!response.ok) handleStrapiError(data.error);
+//   } catch (error) {
+//     handleError(error);
+//   }
+// }
 
 interface PageProps {
   params: Params;
@@ -19,6 +31,7 @@ interface PageProps {
 }
 
 export default async function HomeRoute({ params, searchParams }: PageProps) {
+  // await test();
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
   const { query = "", filters = "" } = resolvedSearchParams;

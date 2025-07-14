@@ -29,9 +29,10 @@ function isProtectedRoute(path: string): boolean {
 
 export async function middleware(request: NextRequest) {
   const user = await getUserMeLoader();
-  console.log("************ middleware ************");
-  console.log(user, "user");
-  console.log("************************************");
+
+  // console.log("************ middleware ************");
+  // console.log(user, "user");
+  // console.log("************************************");
 
   const currentPath = request.nextUrl.pathname;
 
