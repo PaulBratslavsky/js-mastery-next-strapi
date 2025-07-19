@@ -250,25 +250,103 @@ class Logger {
   }
 
   /**
+   * Redacts sensitive data from log entries
+   */
+  private redactSensitiveData(data: unknown): unknown {
+    if (typeof data === "string") {
+      return this.redactString(data);
+    }
+
+    if (Array.isArray(data)) {
+      return data.map((item) => this.redactSensitiveData(item));
+    }
+
+    if (typeof data === "object" && data !== null) {
+      const redacted: Record<string, unknown> = { ...data };
+      const sensitiveKeys = [
+        "token",
+        "jwt",
+        "password",
+        "secret",
+        "key",
+        "access_token",
+        "refresh_token",
+        "api_key",
+        "private_key",
+        "client_secret",
+        "authorization",
+      ];
+
+      for (const key of sensitiveKeys) {
+        if (key in redacted) {
+          redacted[key] = "[REDACTED]";
+        }
+      }
+
+      // Recursively redact nested objects
+      for (const [key, value] of Object.entries(redacted)) {
+        if (typeof value === "object" && value !== null) {
+          redacted[key] = this.redactSensitiveData(value);
+        } else if (typeof value === "string") {
+          redacted[key] = this.redactString(value);
+        }
+      }
+
+      return redacted;
+    }
+    return data;
+  }
+
+  /**
+   * Redacts sensitive information from strings (like URLs)
+   */
+  private redactString(str: string): string {
+    if (typeof str !== "string") {
+      return str;
+    }
+
+    // Redact GitHub tokens
+    str = str.replace(/gho_[a-zA-Z0-9]{35,}/g, "[REDACTED_GITHUB_TOKEN]");
+    str = str.replace(/ghp_[a-zA-Z0-9]{35,}/g, "[REDACTED_GITHUB_TOKEN]");
+
+    // Redact other common token patterns
+    str = str.replace(/access_token=[^&\s]+/g, "access_token=[REDACTED]");
+    str = str.replace(/token=[^&\s]+/g, "token=[REDACTED]");
+    str = str.replace(/jwt=[^&\s]+/g, "jwt=[REDACTED]");
+
+    // Redact API keys
+    str = str.replace(/api_key=[^&\s]+/g, "api_key=[REDACTED]");
+    str = str.replace(/key=[^&\s]+/g, "key=[REDACTED]");
+
+    return str;
+  }
+
+  /**
    * Main logging method
    */
   private log(level: LogLevel, message: string, data?: unknown): void {
     if (!this.shouldLog(level)) return;
 
     const timestamp = new Date().toISOString();
+    const redactedData = this.redactSensitiveData(data);
+
     const logEntry: LogEntry = {
       timestamp,
       level,
       message,
-      data: data ?? null,
+      data: redactedData ?? null,
       environment:
         process.env.NODE_ENV === "production" ? "production" : "development",
       service: this.config.service,
     };
 
-    // Console output
+    // Console output - FIX: Use redactedData instead of data
     if (this.config.enableConsoleLogging) {
-      const formattedMessage = this.formatConsoleMessage(level, message, data);
+      const formattedMessage = this.formatConsoleMessage(
+        level,
+        message,
+        redactedData
+      );
       switch (level) {
         case "debug":
           console.debug(formattedMessage);
