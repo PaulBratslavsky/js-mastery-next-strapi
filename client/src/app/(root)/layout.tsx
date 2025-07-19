@@ -3,6 +3,7 @@ import {
   RightSidebar,
   TopNavigation,
 } from "@/components/navigation";
+import { logger } from "@/lib/logger";
 import { getUserMeLoader } from "@/lib/services/user";
 
 // Force dynamic rendering for the entire app
@@ -15,6 +16,7 @@ interface Props {
 async function loader() {
   try {
     const user = await getUserMeLoader();
+    logger.info("DashboardLayout", { user });
     return user?.data;
   } catch (error) {
     console.error("Failed to load user:", error);
