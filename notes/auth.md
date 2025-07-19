@@ -1,3 +1,4 @@
+``` ts
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 
@@ -12,16 +13,13 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
   },
 });
+```
 
 
-/*
 
 AUTH_SECRET=provide-secret
 AUTH_GITHUB_SECRET=provide-secret
 AUTH_GITHUB_ID=provide-id
-
-
-*/
 
 
 
