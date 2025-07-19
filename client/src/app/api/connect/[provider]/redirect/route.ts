@@ -4,10 +4,7 @@ import { NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { getStrapiURL } from "@/lib/utils";
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ [key: string]: string }> }
-) {
+export async function GET(request: Request, { params }: { params: Promise<{ [key: string]: string }> }) {
   const resolvedParams = await params;
   const { searchParams } = new URL(request.url);
   const token = searchParams.get("access_token");
@@ -56,15 +53,19 @@ export async function GET(
       return NextResponse.redirect(new URL("/", request.url));
     }
 
+    // Use cookies() to READ the redirect URL (handles URL decoding properly)
     const cookieStore = await cookies();
     const redirectUrl = cookieStore.get("redirectUrl");
-    const urlValue = redirectUrl?.value;
+    const urlValue = redirectUrl?.value; // This will be properly decoded
 
     const requestUrl = new URL(request.url);
     const hostname = requestUrl.hostname;
     const isLocalhost = hostname === "localhost";
 
-    cookieStore.set("jwt", data.jwt, {
+    // Create response and use NextResponse.cookies to SET the JWT cookie
+    const response = NextResponse.redirect(new URL(urlValue ?? "/courses", request.url));
+    
+    response.cookies.set("jwt", data.jwt, {
       maxAge: 60 * 60 * 24 * 7, // 1 week
       path: "/",
       domain: process.env.HOST ?? "localhost",
@@ -73,13 +74,16 @@ export async function GET(
       sameSite: "lax",
     });
 
+    // Optional: Clear the redirect cookie after use
+    response.cookies.delete("redirectUrl");
+
     logger.info("User successfully signed in", {
       provider,
       redirectTo: urlValue ?? "/courses",
       isLocalhost,
     });
 
-    return NextResponse.redirect(new URL(urlValue ?? "/courses", request.url));
+    return response;
   } catch (error) {
     logger.error("Sign in process failed with exception", {
       provider,
