@@ -1,4 +1,5 @@
 "use client";
+// Note: this is build based on this library: https://mdxeditor.dev/editor/demo
 import "@mdxeditor/editor/style.css";
 import "./editor.css";
 
@@ -30,6 +31,8 @@ import {
   linkDialogPlugin,
   codeMirrorPlugin,
   diffSourcePlugin,
+  CodeToggle,
+  BlockTypeSelect,
 } from "@mdxeditor/editor";
 import { basicDark } from "cm6-theme-basic-dark";
 import { basicLight } from "cm6-theme-basic-light";
@@ -88,21 +91,26 @@ export default function MDXEditorClient({
                     fallback: () => (
                       <>
                         <UndoRedo />
-                        <Separator />
 
+                        <Separator />
                         <BoldItalicUnderlineToggles />
-                        <Separator />
+                        <CodeToggle />
 
-                        <ListsToggle />
                         <Separator />
+                        <BlockTypeSelect />
 
+                        <Separator />
                         <CreateLink />
                         <InsertImage />
-                        <Separator />
 
+                        <Separator />
+                        <ListsToggle />
+
+                        <Separator />
                         <InsertTable />
                         <InsertThematicBreak />
 
+                        <Separator />
                         <InsertCodeBlock />
                       </>
                     ),
