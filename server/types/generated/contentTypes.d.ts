@@ -517,7 +517,7 @@ export interface ApiUserProfileUserProfile extends Struct.CollectionTypeSchema {
     singularName: 'user-profile';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     bio: Schema.Attribute.RichText;
@@ -1052,6 +1052,7 @@ export interface PluginUsersPermissionsUser
       }>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    referenceId: Schema.Attribute.String & Schema.Attribute.Unique;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
     role: Schema.Attribute.Relation<
       'manyToOne',
@@ -1066,10 +1067,6 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
-    userProfile: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::user-profile.user-profile'
-    >;
   };
 }
 

@@ -6,9 +6,9 @@ import { QuestionCard } from "@/components/cards/question-card";
 import { HomeFilter } from "@/components/filters/home-filter";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
-import { handleError } from "@/lib/handlers/error";
+// import { handleError } from "@/lib/handlers/error";
 import { Params, SearchParams } from "@/types";
-import { handleStrapiError } from "@/lib/handlers/handle-strapi-error";
+// import { handleStrapiError } from "@/lib/handlers/handle-strapi-error";
 
 export const metadata: Metadata = {
   title: "Home",
