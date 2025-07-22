@@ -15,24 +15,38 @@ export type SearchParams = Promise<BaseParams>;
 
 export type Tag = {
   documentId: string;
-  name: string;
+  label: string;
+  value: string;
   questions?: number;
   showCount?: boolean;
   compact?: boolean;
 };
 
-export type Author = {
+
+export type UserProfile = {
   documentId: string;
   name: string;
-  image: string;
+  bio: string;
+  reputation: number;
+  public: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date;
+  image: {
+    id: number;
+    documentId: string;
+    url: string;
+    name: string;
+    alternativeText: string;
+  };
 };
 
 export type Question = {
   documentId: string;
   title: string;
   description: string;
-  tags: Tag[];
-  author: Author;
+  tags?: Tag[];
+  userProfile?: UserProfile;
   upvotes: number;
   views: number;
   answers: number;

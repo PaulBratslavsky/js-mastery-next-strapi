@@ -21,15 +21,15 @@ interface TagCardInterface {
 }
 
 export function TagCard({
-  data: { documentId, name, questions, showCount, compact},
+  data: { documentId, label, value, questions, showCount, compact},
 }: TagCardInterface) {
   const randomColor = tagColors[Math.floor(Math.random() * tagColors.length)];
-  const iconClassName = getDevIcon(name);
+  const iconClassName = getDevIcon(value);
   return (
     <Link href={ROUTES.TAGS(documentId)} className="inline-flex">
       <Badge className={cn("flex items-center gap-2 px-3 py-1", randomColor, compact && "px-2 py-0.5"     )}>
-        <i className={cn(iconClassName, "text-sm")}></i>
-        <span>{name}</span>
+        {iconClassName && <i className={cn(iconClassName, "text-sm")}></i>}
+        <span>{label}</span>
         {showCount && <p className="small-medium">{questions}</p>}
       </Badge>
     </Link>

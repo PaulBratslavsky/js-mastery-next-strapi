@@ -40,35 +40,40 @@ const topQuestions = [
 const popularTags = [
   {
     documentId: "1",
-    name: "react",
+    label: "react",
+    value: "react",
     questions: 20,
     showCount: true,
     compact: false,
   },
   {
     documentId: "2",
-    name: "javascript",
+    label: "javascript",
+    value: "javascript",
     questions: 15,
     showCount: true,
     compact: false,
   },
   {
     documentId: "3",
-    name: "nextjs",
+    label: "nextjs",
+    value: "nextjs",
     questions: 10,
     showCount: true,
     compact: false,
   },
   {
     documentId: "4",
-    name: "typescript",
+    label: "typescript",
+    value: "typescript",
     questions: 8,
     showCount: true,
     compact: false,
   },
   {
     documentId: "5",
-    name: "nodejs",
+    label: "nodejs",
+    value: "nodejs",
     questions: 6,
     showCount: true,
     compact: false,
@@ -96,8 +101,8 @@ export function RightSidebar() {
       <div>
         <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
         <div className="flex flex-wrap gap-2 mt-7">
-          {popularTags.map(({ documentId, name, questions, showCount, compact }) => (
-            <TagCard key={documentId} data={{ documentId, name, questions, showCount, compact }} />
+          {popularTags.map(({ documentId, label, value, questions, showCount, compact }) => (
+            <TagCard key={documentId} data={{ documentId, label, value, questions, showCount, compact }} />
           ))}
         </div>
       </div>

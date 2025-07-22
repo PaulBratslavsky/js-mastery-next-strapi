@@ -11,8 +11,10 @@ export function getStrapiURL() {
 }
 
 export function getDevIcon(name: string) {
+  if (name === undefined) return null;
   const normalizedName = name.toLowerCase().replace(/[ .]/g, "-");
   return `devicon-${normalizedName}-plain`;
+
 }
 
 interface FormQueryParams {

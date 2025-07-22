@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { getUserMeLoader } from "@/lib/services/user";
+import { getUserMeLoader } from "@/data/services/user";
 
 // Define an array of protected routes
 const protectedRoutes: string[] = [

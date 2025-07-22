@@ -406,7 +406,7 @@ export interface ApiContentContent extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     upvotes: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    user: Schema.Attribute.Relation<
+    userProfile: Schema.Attribute.Relation<
       'oneToOne',
       'api::user-profile.user-profile'
     >;

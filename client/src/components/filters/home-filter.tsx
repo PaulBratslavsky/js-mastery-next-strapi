@@ -22,19 +22,11 @@ const filters = [
     name: "Recommended",
     value: "recommended",
   },
-  {
-    name: "React",
-    value: "react",
-  },
-  {
-    name: "JavaScript",
-    value: "javascript",
-  },
 ];
 
 export function HomeFilter() {
 
-  const [query, setSearchQuery] = useQueryState("filters", {
+  const [query, setSearchQuery] = useQueryState("category", {
     defaultValue: "",
     shallow: false,
   });
