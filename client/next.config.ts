@@ -18,6 +18,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "robohash.org",
       },
+      {
+        protocol: "https",
+        hostname: "stylish-hope-09724ec885.media.strapiapp.com",
+      },
     ],
   },
 };
