@@ -7,7 +7,7 @@ import { HomeFilter } from "@/components/filters/home-filter";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
 // import { handleError } from "@/lib/handlers/error";
-import { getAllQuestions } from "@/data/loaders";
+import { api } from "@/data/api";
 import { Params, SearchParams } from "@/types";
 
 export const metadata: Metadata = {
@@ -29,15 +29,7 @@ export default async function HomeRoute({ params, searchParams }: PageProps) {
   const { query = "", category = "" } = resolvedSearchParams;
 
 
-  const { data, meta } = await getAllQuestions(query as string, category as string, 1);
-
-  // logger.info(JSON.stringify(meta, null, 2), "meta");
-  console.dir(meta, { depth: null });
-  console.dir(data, { depth: null });
-  // logger.info(meta, "meta");
-
-  console.log(resolvedParams, "resolvedParams");
-  console.log(resolvedSearchParams, "resolvedSearchParams");
+  const { data, meta } = await api.questions.getAllQuestions(query as string, category as string, 1);
 
   // const mockQuestions = [
   //   {
