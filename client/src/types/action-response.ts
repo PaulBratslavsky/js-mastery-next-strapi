@@ -1,28 +1,5 @@
 import { NextResponse } from "next/server";
 
-/*
-
-{
-  "data": null,
-  "error": {
-    "status": 404,
-    "name": "NotFoundError",
-    "message": "Not Found",
-    "details": {}
-  }
-    "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 4,
-      "pageCount": 1,
-      "total": 1
-    }
-  }
-}
-}
-
-*/
-
 export type StrapiResponse<T = null> = {
   success: boolean;
   data?: T;

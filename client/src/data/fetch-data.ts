@@ -2,7 +2,7 @@ import { handleError } from "@/lib/handlers/error";
 import { logger } from "@/lib/logger";
 import type { StrapiResponse } from "@/types/action-response";
 
-import { getAuthToken } from "./services/get-token";
+import { getAuthToken } from "../services/get-token";
 
 export async function fetchWithTimeout(
   input: RequestInfo,
@@ -45,8 +45,10 @@ export async function fetchData<T>(url: string): Promise<StrapiResponse<T>> {
     if (!response.ok) {
       // If Strapi returns a structured error, pass it back as-is
       logger.warn("Strapi error response:", data);
-      return data as StrapiResponse<T>;
+      return data;
     }
+
+    logger.info("Response from Strapi", data);
 
     return data;
   } catch (error) {

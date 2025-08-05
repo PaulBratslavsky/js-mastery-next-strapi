@@ -3,8 +3,8 @@ import {
   RightSidebar,
   TopNavigation,
 } from "@/components/navigation";
-import { getUserMeLoader } from "@/data/services/user";
 import { logger } from "@/lib/logger";
+import { getUserMeLoader } from "@/services/user";
 
 // Force dynamic rendering for the entire app
 export const dynamic = "force-dynamic";

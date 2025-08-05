@@ -25,62 +25,59 @@ const formatResponse = (
     : { status, ...responseContent };
 };
 
-const handleError = (error: unknown, responseType: ResponseType = "server") => {
+const handleError = (
+  error: unknown,
+  responseType: ResponseType = "server"
+) => {
+  let statusCode = 500;
+  let message = "An unexpected error occurred";
+  let errors: Record<string, string[]> | undefined;
+
   if (error instanceof RequestError) {
+    statusCode = error.statusCode;
+    message = error.message;
+    errors = error.errors;
+
     logger.error("Request error occurred", {
-      statusCode: error.statusCode,
-      message: error.message,
-      errors: error.errors,
+      statusCode,
+      message,
+      errors,
       responseType,
     });
-
-    return formatResponse(
-      responseType,
-      error.statusCode,
-      error.message,
-      error.errors
-    );
-  }
-
-  if (error instanceof ZodError) {
+  } else if (error instanceof ZodError) {
     const validationError = new ValidationError(
       error.flatten().fieldErrors as Record<string, string[]>
     );
 
+    statusCode = validationError.statusCode;
+    message = validationError.message;
+    errors = validationError.errors;
+
     logger.error("Validation error occurred", {
-      statusCode: validationError.statusCode,
-      message: validationError.message,
-      errors: validationError.errors,
+      statusCode,
+      message,
+      errors,
       responseType,
     });
+  } else if (error instanceof Error) {
+    message = error.message;
 
-    return formatResponse(
-      responseType,
-      validationError.statusCode,
-      validationError.message,
-      validationError.errors
-    );
-  }
-
-  if (error instanceof Error) {
     logger.error("Generic error occurred", {
-      statusCode: 500,
-      message: error.message,
+      statusCode,
+      message,
       stack: error.stack,
       responseType,
     });
-
-    return formatResponse(responseType, 500, error.message);
+  } else {
+    logger.error("Unknown error occurred", {
+      statusCode,
+      message,
+      error: String(error),
+      responseType,
+    });
   }
 
-  logger.error("Unknown error occurred", {
-    statusCode: 500,
-    message: "An unexpected error occurred",
-    error: String(error),
-    responseType,
-  });
-
-  return formatResponse(responseType, 500, "An unexpected error occurred");
+  return formatResponse(responseType, statusCode, message, errors);
 };
 
 export { handleError };

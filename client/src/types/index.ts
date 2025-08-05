@@ -53,6 +53,7 @@ export type Question = {
   createdAt: Date;
 };
 
+
 export type StrapiUserData = {
   id: number;
   documentId: string;

@@ -57,7 +57,7 @@ export function MobileNavigation({ user }: MobileNavigationProps) {
         </div>
         <SheetFooter className="flex flex-col gap-2">
         {user ? (
-          <AuthUserNavButton user={user} className="hidden sm:block" />
+          <AuthUserNavButton user={user} className="flex" />
         ) : (
           <AuthButton />
         )}

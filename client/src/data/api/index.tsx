@@ -1,9 +1,9 @@
-import { getAllQuestions } from "./questions";
+import { questions } from "./questions";
+import { users } from "./users";
 
 const api = {
-  questions: {
-    getAllQuestions,
-  },
+  questions: questions,
+  users: users,
 };
 
 export { api };

@@ -6,7 +6,6 @@ import { QuestionCard } from "@/components/cards/question-card";
 import { HomeFilter } from "@/components/filters/home-filter";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
-// import { handleError } from "@/lib/handlers/error";
 import { api } from "@/data/api";
 import { Params, SearchParams } from "@/types";
 
@@ -23,7 +22,6 @@ interface PageProps {
 export default async function HomeRoute({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams;
   const { query = "", category = "" } = resolvedSearchParams;
-
   const { data } = await api.questions.getAllQuestions(query as string, category as string, 1);
 
 
