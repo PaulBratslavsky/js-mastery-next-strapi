@@ -1,10 +1,8 @@
 "use client";
-// https://sonner.emilkowal.ski/
 import Image from "next/image";
-import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 
-import { ROUTES } from "@/constants/routes";
+import { getStrapiURL } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 
@@ -21,21 +19,18 @@ function AuthButton({
 }) {
   const handleSignIn = async (provider: "github" | "google") => {
     try {
-      signIn(provider, {
-        callbackUrl: ROUTES.HOME,
-        redirect: true,
-      });
+      const strapiUrl = getStrapiURL();
+      const authUrl = `${strapiUrl}/api/connect/${provider}`;
+      window.location.href = authUrl;
     } catch (error) {
       console.error(error);
       const errorMessage =
         error instanceof Error
           ? error.message
-          : "An error occured during singin";
+          : "An error occurred during sign in";
       toast.error("Failed To Sign In", {
         description: errorMessage,
       });
-    } finally {
-      toast.success("Success");
     }
   };
 
