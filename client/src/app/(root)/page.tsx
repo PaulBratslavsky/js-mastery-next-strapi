@@ -20,16 +20,11 @@ interface PageProps {
   searchParams: SearchParams;
 }
 
-export default async function HomeRoute({ params, searchParams }: PageProps) {
- 
-
-  const resolvedParams = await params;
+export default async function HomeRoute({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams;
-
   const { query = "", category = "" } = resolvedSearchParams;
 
-
-  const { data, meta } = await api.questions.getAllQuestions(query as string, category as string, 1);
+  const { data } = await api.questions.getAllQuestions(query as string, category as string, 1);
 
 
 
