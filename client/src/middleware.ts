@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { getUserMeLoader } from "@/services/user";
+import { getUserMeLoader } from "@/data/api/services/user";
 
 // Define an array of protected routes
 const protectedRoutes: string[] = [
@@ -9,7 +9,7 @@ const protectedRoutes: string[] = [
   "/dashboard/*",
   "/suggestions",
   "/suggestions/*",
-  "/ask-question",
+  "/questions/ask-question",
 ];
 
 // Helper function to check if a path is protected

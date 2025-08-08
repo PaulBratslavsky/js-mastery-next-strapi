@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
 import { RequestError, ValidationError } from "../http-errors";
-import { logger } from "../logger";
+// import { logger } from "../logger";
 
 export type ResponseType = "api" | "server";
 
@@ -38,12 +38,12 @@ const handleError = (
     message = error.message;
     errors = error.errors;
 
-    logger.error("Request error occurred", {
-      statusCode,
-      message,
-      errors,
-      responseType,
-    });
+    // logger.error("Request error occurred", {
+    //   statusCode,
+    //   message,
+    //   errors,
+    //   responseType,
+    // });
   } else if (error instanceof ZodError) {
     const validationError = new ValidationError(
       error.flatten().fieldErrors as Record<string, string[]>
@@ -53,28 +53,28 @@ const handleError = (
     message = validationError.message;
     errors = validationError.errors;
 
-    logger.error("Validation error occurred", {
-      statusCode,
-      message,
-      errors,
-      responseType,
-    });
+    // logger.error("Validation error occurred", {
+    //   statusCode,
+    //   message,
+    //   errors,
+    //   responseType,
+    // });
   } else if (error instanceof Error) {
     message = error.message;
 
-    logger.error("Generic error occurred", {
-      statusCode,
-      message,
-      stack: error.stack,
-      responseType,
-    });
+    // logger.error("Generic error occurred", {
+    //   statusCode,
+    //   message,
+    //   stack: error.stack,
+    //   responseType,
+    // });
   } else {
-    logger.error("Unknown error occurred", {
-      statusCode,
-      message,
-      error: String(error),
-      responseType,
-    });
+    // logger.error("Unknown error occurred", {
+    //   statusCode,
+    //   message,
+    //   error: String(error),
+    //   responseType,
+    // });
   }
 
   return formatResponse(responseType, statusCode, message, errors);

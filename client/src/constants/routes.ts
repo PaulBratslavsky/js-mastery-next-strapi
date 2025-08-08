@@ -5,8 +5,8 @@ export const ROUTES = {
   COMMUNITY: "/community",
   JOBS: "/jobs",
   COLLECTIONS: "/collections",
-  ASK_QUESTION: "/ask-question",
+  ASK_QUESTION: "questions/ask-question",
   TAGS: (id: string) => `/tags/${id}`,
   PROFILE: (id: string) => `/profile/${id}`,
-  QUESTIONS: (id: string) => `/questions/${id}`,
+  QUESTIONS: (documentId: string) => `/questions/${documentId}`,
 } as const;

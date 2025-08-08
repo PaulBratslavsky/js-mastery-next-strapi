@@ -6,8 +6,10 @@ import { QuestionCard } from "@/components/cards/question-card";
 import { HomeFilter } from "@/components/filters/home-filter";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
-import { api } from "@/data/api";
+import { loaders } from "@/data/api/loaders";
 import { Params, SearchParams } from "@/types";
+
+
 
 export const metadata: Metadata = {
   title: "Home",
@@ -22,9 +24,7 @@ interface PageProps {
 export default async function HomeRoute({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams;
   const { query = "", category = "" } = resolvedSearchParams;
-  const { data } = await api.questions.getAllQuestions(query as string, category as string, 1);
-
-
+  const { data } = await loaders.questions.getAllQuestions(query as string, category as string, 1);
 
   return (
     <React.Fragment>

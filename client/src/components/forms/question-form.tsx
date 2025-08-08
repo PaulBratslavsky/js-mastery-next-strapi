@@ -1,8 +1,11 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
+import { TagSelect } from "@/components/custom/tag-select";
 import { Editor } from "@/components/editor";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,11 +18,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { ROUTES } from "@/constants/routes"
+import { action } from "@/data/api/actions";
 import { AskQuestionSchema } from "@/lib/validations";
 
-import { MultiSelect } from "../custom/multi-select";
-
 export function QuestionForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof AskQuestionSchema>>({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
@@ -29,36 +33,28 @@ export function QuestionForm() {
     },
   });
 
-  const handleCreateQuestion = (values: z.infer<typeof AskQuestionSchema>) => {
-    console.log(values);
-    const { title, content, tags } = values;
-    console.log(title, content, tags);
-    alert(JSON.stringify(values));
+  const handleCreateQuestion = async (
+    values: z.infer<typeof AskQuestionSchema>
+  ) => {
+    const formData = new FormData();
+
+    formData.append("title", values.title);
+    formData.append("content", values.content);
+    formData.append("tags", JSON.stringify(values.tags));
+
+    const response = await action.questions.createQuestion(formData);
+
+    if (response.error)
+      form.setError("root", { message: response.error.message });
+
+    console.log(response)
+
+    if (response.success && response.data?.data) {
+      toast.success("Question Created Successfully");
+      router.push(ROUTES.QUESTIONS(response.data.data.documentId));
+    }
+
   };
-
-
-  const frameworksList = [
-    {
-      value: "next.js",
-      label: "Next.js",
-    },
-    {
-      value: "sveltekit",
-      label: "SvelteKit",
-    },
-    {
-      value: "nuxt.js",
-      label: "Nuxt.js",
-    },
-    {
-      value: "remix",
-      label: "Remix",
-    },
-    {
-      value: "astro",
-      label: "Astro",
-    },
-  ];
 
   return (
     <Form {...form}>
@@ -109,7 +105,6 @@ export function QuestionForm() {
           )}
         />
 
-
         <FormField
           control={form.control}
           name="tags"
@@ -120,10 +115,9 @@ export function QuestionForm() {
               </FormLabel>
               <FormControl>
                 <div className="flex-between gap-3">
-                  <MultiSelect
-                    options={frameworksList}
+                  <TagSelect
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    defaultValue={field.value?.map((tag) => tag.value) || []}
                     placeholder="Select options"
                     variant="inverted"
                     animation={2}
@@ -139,6 +133,11 @@ export function QuestionForm() {
             </FormItem>
           )}
         />
+        {form.formState.errors.root && (
+          <div className="text-red-500 text-sm mt-2">
+            {form.formState.errors.root.message}
+          </div>
+        )}
         <div className="mt-16 flex justify-end">
           <Button
             type="submit"

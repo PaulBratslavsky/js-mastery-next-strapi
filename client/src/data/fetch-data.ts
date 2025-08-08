@@ -1,8 +1,8 @@
 import { handleError } from "@/lib/handlers/error";
-import { logger } from "@/lib/logger";
+// import { logger } from "@/lib/logger";
 import type { StrapiResponse } from "@/types/action-response";
 
-import { getAuthToken } from "../services/get-token";
+import { getAuthToken } from "./api/services/get-token";
 
 export async function fetchWithTimeout(
   input: RequestInfo,
@@ -44,16 +44,16 @@ export async function fetchData<T>(url: string): Promise<StrapiResponse<T>> {
 
     if (!response.ok) {
       // If Strapi returns a structured error, pass it back as-is
-      logger.warn("Strapi error response:", data);
+      // logger.warn("Strapi error response:", data);
       return data;
     }
 
-    logger.info("Response from Strapi", data);
+    // logger.info("Response from Strapi", data);
 
     return data;
   } catch (error) {
     if ((error as Error).name === "AbortError") {
-      logger.error("Request timed out");
+      // logger.error("Request timed out");
       return {
         error: {
           status: 408,
@@ -65,7 +65,7 @@ export async function fetchData<T>(url: string): Promise<StrapiResponse<T>> {
       } as StrapiResponse<T>;
     }
 
-    logger.error("Network or unexpected error:", error);
+    // logger.error("Network or unexpected error:", error);
     return handleError(error) as StrapiResponse<T>;
   }
 }

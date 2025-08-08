@@ -4,7 +4,7 @@ import { getStrapiURL } from "@/lib/utils";
 import { UserProfile } from "@/types";
 import { StrapiResponse } from "@/types/action-response";
 
-import { fetchData } from "../fetch-data";
+import { fetchData } from "../../fetch-data";
 
 const baseUrl = getStrapiURL();
 
@@ -42,7 +42,4 @@ export async function getAllUsers(
   return fetchData(url.href);
 }
 
-
-export const users = {
-  getAllUsers,
-};
+export const users = { getAllUsers };

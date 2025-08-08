@@ -13,6 +13,7 @@ export interface RouteParams extends BaseParams {
 export type Params = Promise<RouteParams>;
 export type SearchParams = Promise<BaseParams>;
 
+
 export type Tag = {
   documentId: string;
   label: string;

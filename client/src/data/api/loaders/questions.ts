@@ -1,18 +1,16 @@
 import qs from "qs";
 
-import { handleError } from "@/lib/handlers/error";
 import { getStrapiURL } from "@/lib/utils";
-import { AskQuestionSchema } from "@/lib/validations";
-import type { Question  } from "@/types";
+import type { Question } from "@/types";
 import { StrapiResponse } from "@/types/action-response";
 
-import { serverActionHandler } from "../action";
-import { fetchData } from "../fetch-data";
-import { mutateData } from "../mutate-data";
+import { fetchData } from "../../fetch-data";
+
+// import { mutateData } from "../mutate-data";
 
 const baseUrl = getStrapiURL();
 
-export async function getAllQuestions(
+async function getAllQuestions(
   queryString?: string,
   filters?: string,
   currentPage: number = 1
@@ -51,30 +49,4 @@ export async function getAllQuestions(
   return fetchData(url.href);
 }
 
-interface CreateQuestionParams {
-  title: string;
-  content: string;
-  tags: string[];
-}
-
-export async function crateQuestion(
-  payload: CreateQuestionParams
-): Promise<StrapiResponse<Question>> {
-  "use server";
-
-  const validationResult = await serverActionHandler({
-    payload,
-    schema: AskQuestionSchema,
-  });
-
-  if (validationResult instanceof Error)
-    return handleError(validationResult) as StrapiResponse<Question>;
-
-  const url = new URL("/api/contents", baseUrl);
-  return mutateData("POST", url.href, payload);
-}
-
-export const questions = {
-  getAllQuestions,
-  crateQuestion,
-};
+export const questions = { getAllQuestions };

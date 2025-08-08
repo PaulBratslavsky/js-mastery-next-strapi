@@ -3,7 +3,7 @@ import { logger } from "@/lib/logger";
 import { getStrapiURL } from "@/lib/utils";
 import { StrapiResponse } from "@/types/action-response";
 
-import { getAuthToken } from "../services/get-token";
+import { getAuthToken } from "./api/services/get-token";
 
 type HTTPMethod = "POST" | "PUT" | "PATCH" | "DELETE";
 

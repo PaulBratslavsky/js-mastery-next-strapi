@@ -1,0 +1,127 @@
+# Page snapshot
+
+```yaml
+- main:
+  - navigation:
+    - link "DevFlow Logo DevFlow":
+      - /url: /
+      - img "DevFlow Logo"
+      - paragraph: DevFlow
+    - textbox "Search anything..."
+    - link "Sign In":
+      - /url: http://localhost:1337/api/connect/github
+    - button "Toggle theme"
+  - navigation:
+    - link "Home Home":
+      - /url: /
+      - img "Home"
+      - paragraph: Home
+    - link "Community Community":
+      - /url: /community
+      - img "Community"
+      - paragraph: Community
+    - link "Collections Collections":
+      - /url: /collections
+      - img "Collections"
+      - paragraph: Collections
+    - link "Find Jobs Find Jobs":
+      - /url: /jobs
+      - img "Find Jobs"
+      - paragraph: Find Jobs
+    - link "Tags Tags":
+      - /url: /tags
+      - img "Tags"
+      - paragraph: Tags
+    - link "Profile Profile":
+      - /url: /profile/3
+      - img "Profile"
+      - paragraph: Profile
+    - link "Ask a question Ask a question":
+      - /url: /questions/ask-question
+      - img "Ask a question"
+      - paragraph: Ask a question
+  - heading "All Questions" [level=1]
+  - link "Ask a Question":
+    - /url: questions/ask-question
+  - button "Newest"
+  - button "Popular"
+  - button "Unanswered"
+  - button "Recommended"
+  - link "this is another question":
+    - /url: /questions/og848lbohievvg8ofbm9kohm
+    - heading "this is another question" [level=3]
+  - link " TypeScript":
+    - /url: /tags/x4dw87e95yfeswb9shrc75ag
+  - text: Anonymous • asked 1 hour ago
+  - img "like"
+  - paragraph: 0 Votes
+  - img "answers"
+  - paragraph: 0 Answers
+  - img "views"
+  - paragraph: Views
+  - link "What is Javascript?":
+    - /url: /questions/s7xjvldllfrwaoxts10lnbco
+    - heading "What is Javascript?" [level=3]
+  - link " React":
+    - /url: /tags/c7iszecqnfebtbebxaveww6h
+  - img "PaulBratslavsky"
+  - img "like"
+  - paragraph: 0 Votes
+  - img "answers"
+  - paragraph: 0 Answers
+  - img "views"
+  - paragraph: Views
+  - link "What is React?":
+    - /url: /questions/epow5rcffmqn0ihx4qdl02ux
+    - heading "What is React?" [level=3]
+  - link " React":
+    - /url: /tags/c7iszecqnfebtbebxaveww6h
+  - img "PaulBratslavsky"
+  - img "like"
+  - paragraph: 0 Votes
+  - img "answers"
+  - paragraph: 0 Answers
+  - img "views"
+  - paragraph: Views
+  - heading "Top Questions" [level=3]
+  - link "What is the best way to learn React?":
+    - /url: /questions/1
+    - paragraph: What is the best way to learn React?
+  - link "What is the best way to learn React?":
+    - /url: /questions/2
+    - paragraph: What is the best way to learn React?
+  - link "What is the best way to learn React?":
+    - /url: /questions/3
+    - paragraph: What is the best way to learn React?
+  - link "What is the best way to learn React?":
+    - /url: /questions/4
+    - paragraph: What is the best way to learn React?
+  - link "What is the best way to learn React?":
+    - /url: /questions/5
+    - paragraph: What is the best way to learn React?
+  - heading "Popular Tags" [level=3]
+  - link " react 20":
+    - /url: /tags/1
+    - text:  react
+    - paragraph: "20"
+  - link " javascript 15":
+    - /url: /tags/2
+    - text:  javascript
+    - paragraph: "15"
+  - link " nextjs 10":
+    - /url: /tags/3
+    - text:  nextjs
+    - paragraph: "10"
+  - link " typescript 8":
+    - /url: /tags/4
+    - text:  typescript
+    - paragraph: "8"
+  - link " nodejs 6":
+    - /url: /tags/5
+    - text:  nodejs
+    - paragraph: "6"
+- region "Notifications alt+T"
+- alert
+- button "Open Next.js Dev Tools":
+  - img
+```

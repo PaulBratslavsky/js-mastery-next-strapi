@@ -1,7 +1,7 @@
-import { api } from "@/data/api";
+import { loaders } from "@/data/api/loaders";
 
 export default async function CommunityRoute() {
-  const { data } = await api.users.getAllUsers(1);
+  const { data } = await loaders.users.getAllUsers(1);
 
   return (
     <div className="min-h-screen w-full flex justify-center items-center">

@@ -12,6 +12,14 @@ cd client && npm run start        # Start production server
 cd client && npm run lint         # Run ESLint validation
 ```
 
+### Testing
+```bash
+cd client && npm run test         # Run Playwright tests
+cd client && npm run test:headed  # Run tests with browser UI
+cd client && npm run test:ui      # Run tests with Playwright UI
+cd client && npm run test:report  # Show test report
+```
+
 ### Working Directory
 Always navigate to the `client/` directory for development commands as this is where the Next.js application resides.
 

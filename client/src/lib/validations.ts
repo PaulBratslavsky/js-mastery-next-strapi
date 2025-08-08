@@ -46,13 +46,17 @@ export const AskQuestionSchema = z.object({
     .max(1000, { error: "Content must be less than 1000 characters." }),
   tags: z
     .array(
-      z
-        .string()
-        .min(1, { error: "Tag is required." })
-        .max(15, { error: "Tag must be less than 15 characters." })
+      z.object({
+        documentId: z.string(),
+        value: z.string().min(1).max(15),
+        label: z.string(),
+        id: z.number().optional(),
+        createdAt: z.string().optional(),
+        updatedAt: z.string().optional(),
+      })
     )
-    .min(1, { error: "At least one tag is required." })
-    .max(5, { error: "You can only add up to 5 tags." }),
+    .min(1, { message: "At least one tag is required." })
+    .max(5, { message: "You can only add up to 5 tags." }),
 });
 
 

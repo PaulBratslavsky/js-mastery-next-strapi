@@ -31,7 +31,7 @@ export const navLinks = [
   },
   {
     imgUrl: "/icons/question.svg",
-    href: "/ask-question",
+    href: "/questions/ask-question",
     label: "Ask a question",
   },
 ];
