@@ -1,8 +1,9 @@
-import { createQuestion} from "./questions";
+import { createQuestion, updateQuestion} from "./questions";
 
 
 export const action = {
   questions: {
-    createQuestion
+    createQuestion,
+    updateQuestion
   }
 }

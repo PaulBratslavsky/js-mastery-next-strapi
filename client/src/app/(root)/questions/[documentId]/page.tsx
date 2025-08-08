@@ -8,9 +8,14 @@ interface PageProps {
 export default async function QuestionDetailRoute({ params }: PageProps) {
   const resolvedParams = await params;
   const questionId = resolvedParams?.documentId;
-  return ( 
-    <div className='min-h-screen w-full flex justify-center items-center'>
-      <h1 className='h1-bold text-white invert-colors'>{questionId}</h1>
+    return ( 
+    <div className='min-h-screen'>
+      <h1 className='h1-bold text-dark100_light900'>Question Detail</h1>
+      <span>Question ID: {questionId}</span>
+      <div className="mt-9">
+        <div>Add Component to nicely display your question.</div>
+      </div>
+      <div>Add Comment Component Here</div>
     </div>
   )
 }

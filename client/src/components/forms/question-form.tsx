@@ -1,9 +1,12 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+
 
 import { TagSelect } from "@/components/custom/tag-select";
 import { Editor } from "@/components/editor";
@@ -18,48 +21,63 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ROUTES } from "@/constants/routes"
+import { ROUTES } from "@/constants/routes";
 import { action } from "@/data/api/actions";
 import { AskQuestionSchema } from "@/lib/validations";
 
-export function QuestionForm() {
+interface QuestionFormProps {
+  defaultValues?: {
+    title?: string;
+    content?: string;
+    tags?: Array<{ value: string; label: string }>;
+  };
+  questionId?: string;
+}
+
+export function QuestionForm({ defaultValues, questionId }: QuestionFormProps) {
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const form = useForm<z.infer<typeof AskQuestionSchema>>({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
-      title: "",
-      content: "",
-      tags: [],
+      title: defaultValues?.title || "",
+      content: defaultValues?.content || "",
+      tags: defaultValues?.tags || [],
     },
   });
 
-  const handleCreateQuestion = async (
+  const handleSubmitQuestion = async (
     values: z.infer<typeof AskQuestionSchema>
   ) => {
-    const formData = new FormData();
+    const transition = async () => {
+      const formData = new FormData();
 
-    formData.append("title", values.title);
-    formData.append("content", values.content);
-    formData.append("tags", JSON.stringify(values.tags));
+      formData.append("title", values.title);
+      formData.append("content", values.content);
+      formData.append("tags", JSON.stringify(values.tags));
 
-    const response = await action.questions.createQuestion(formData);
+      const response = questionId 
+        ? await action.questions.updateQuestion(questionId, formData)
+        : await action.questions.createQuestion(formData);
 
-    if (response.error)
-      form.setError("root", { message: response.error.message });
+      if (response.error)
+        form.setError("root", { message: response.error.message });
 
-    console.log(response)
+      console.log(response);
 
-    if (response.success && response.data?.data) {
-      toast.success("Question Created Successfully");
-      router.push(ROUTES.QUESTIONS(response.data.data.documentId));
-    }
+      if (response.success && response.data?.data) {
+        toast.success(questionId ? "Question Updated Successfully" : "Question Created Successfully");
+        router.push(ROUTES.QUESTIONS(response.data.data.documentId));
+      }
+    };
 
+    startTransition(transition);
   };
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(handleCreateQuestion)}
+        onSubmit={form.handleSubmit(handleSubmitQuestion)}
         className="flex w-full flex-col gap-10"
       >
         <FormField
@@ -142,8 +160,16 @@ export function QuestionForm() {
           <Button
             type="submit"
             className="primary-gradient !text-light-900 w-fit"
+            disabled={isPending}
           >
-            Ask A Question
+            {isPending ? (
+              <>
+                <LoaderCircle className="mr-2 size-4 animate-spin" />
+                <span>{questionId ? "Updating" : "Asking"}</span>
+              </>
+            ) : (
+              <span>{questionId ? "Update Question" : "Ask A Question"}</span>
+            )}
           </Button>
         </div>
       </form>
